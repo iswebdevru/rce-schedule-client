@@ -1,17 +1,15 @@
-import { useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 
-const schedule = [
-  {
-    group: 'ИС-203',
-    subjects: [
-      {
-        id: 0,
-        title: 'Информатика',
-        cabinet: 234,
-      },
-    ],
-  },
-];
+export type Subject = {
+  index: number;
+  title: string;
+  cabinet: string;
+};
+
+export interface Schedule {
+  group: string;
+  subjects: Subject[];
+}
 
 function InformationForm() {
   const groupInputId = useId();
@@ -44,33 +42,57 @@ function InformationForm() {
 }
 
 function Schedule() {
+  const [schedule, setSchedule] = useState<Schedule[] | null>(null);
+
+  useEffect(() => {
+    getSchedule();
+  });
+
+  const getSchedule = async () => {
+    const body = await (await fetch('http://127.0.0.1:3000/schedule')).json();
+    setSchedule(body);
+  };
+
+  if (!schedule) {
+    return <>loading</>;
+  }
+
   return (
-    <div>
-      <table className="mx-auto">
-        <tbody className="text-left border border-gray-400">
-          <tr>
-            <th className="border border-gray-400 px-2 py-1" colSpan={2}>
-              Пара
-            </th>
-            <th className="border border-gray-400 px-2 py-1">Кабинет</th>
-          </tr>
-          <tr>
-            <td className="border border-gray-400 px-2 py-1">0</td>
-            <td className="border border-gray-400 px-2 py-1">Физ-ра</td>
-            <td className="border border-gray-400 px-2 py-1"></td>
-          </tr>
-          <tr>
-            <td className="border border-gray-400 px-2 py-1">1</td>
-            <td className="border border-gray-400 px-2 py-1">Информатика</td>
-            <td className="border border-gray-400 px-2 py-1">321</td>
-          </tr>
-          <tr>
-            <td className="border border-gray-400 px-2 py-1">2</td>
-            <td className="border border-gray-400 px-2 py-1">Физ-ра</td>
-            <td className="border border-gray-400 px-2 py-1">342</td>
-          </tr>
-        </tbody>
-      </table>
+    <div className="flex flex-wrap flex-auto">
+      {schedule.map(schedule => {
+        return (
+          <table>
+            <tbody className="text-left border border-gray-400">
+              <tr>
+                <th className="border border-gray-400 px-2 py-1" colSpan={3}>
+                  {schedule.group}
+                </th>
+              </tr>
+              <tr>
+                <td className="border border-gray-400 px-2 py-1" colSpan={2}>
+                  Пара
+                </td>
+                <td className="border border-gray-400 px-2 py-1">Кабинет</td>
+              </tr>
+              {schedule.subjects.map(subject => {
+                return (
+                  <tr>
+                    <td className="border border-gray-400 px-2 py-1">
+                      {subject.index}
+                    </td>
+                    <td className="border border-gray-400 px-2 py-1">
+                      {subject.title}
+                    </td>
+                    <td className="border border-gray-400 px-2 py-1">
+                      {subject.cabinet}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        );
+      })}
     </div>
   );
 }
@@ -81,9 +103,9 @@ export function App() {
       <div>
         <Schedule />
       </div>
-      <div>
+      {/* <div>
         <InformationForm />
-      </div>
+      </div> */}
     </div>
   );
 }
