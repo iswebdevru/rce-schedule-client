@@ -1,15 +1,41 @@
-import { useEffect, useId, useState } from 'react';
+import { Reducer, useEffect, useId, useReducer } from 'react';
+import { z } from 'zod';
 
-export type Subject = {
-  index: number;
-  title: string;
-  cabinet: string;
+const ScheduleSchema = z.object({
+  error: z.string().nullable(),
+  data: z
+    .object({
+      group: z.string(),
+      subjects: z
+        .object({
+          index: z.number(),
+          title: z.string(),
+          cabinet: z.string(),
+        })
+        .array(),
+    })
+    .array(),
+});
+
+type ScheduleState =
+  | ScheduleStateLoading
+  | ScheduleStateError
+  | ScheduleStateSuccess;
+type ScheduleStateLoading = {
+  type: 'loading';
 };
-
-export interface Schedule {
-  group: string;
-  subjects: Subject[];
-}
+type ScheduleStateError = {
+  type: 'error';
+  reason: string;
+};
+type ScheduleStateSuccess = {
+  type: 'success';
+  data: z.infer<typeof ScheduleSchema>['data'];
+};
+type ScheduleReducerAction = {
+  type: 'ADD' | 'WAIT' | 'THROW';
+  payload?: any;
+};
 
 function InformationForm() {
   const groupInputId = useId();
@@ -40,26 +66,65 @@ function InformationForm() {
     </div>
   );
 }
+const scheduleReducer: Reducer<ScheduleState, ScheduleReducerAction> = (
+  prevState,
+  action
+) => {
+  switch (action.type) {
+    case 'ADD':
+      return {
+        type: 'success',
+        data: action.payload,
+      };
+    case 'WAIT':
+      return {
+        type: 'loading',
+      };
+    case 'THROW':
+      return {
+        type: 'error',
+        reason: 'Not Found',
+      };
+    default:
+      return prevState;
+  }
+};
 
 function Schedule() {
-  const [schedule, setSchedule] = useState<Schedule[] | null>(null);
+  const [schedule, dispatch] = useReducer(scheduleReducer, { type: 'loading' });
 
   useEffect(() => {
     getSchedule();
-  });
+  }, []);
 
   const getSchedule = async () => {
-    const body = await (await fetch('http://127.0.0.1:3000/schedule')).json();
-    setSchedule(body);
+    const data = await (
+      await fetch('http://127.0.0.1:3000/schedule?day=12')
+    ).json();
+    const validatedSchedule = ScheduleSchema.safeParse(data);
+    if (validatedSchedule.success) {
+      dispatch({
+        type: 'ADD',
+        payload: validatedSchedule.data.data,
+      });
+    } else {
+      dispatch({
+        type: 'THROW',
+        payload: validatedSchedule.error.message,
+      });
+    }
   };
 
-  if (!schedule) {
-    return <>loading</>;
+  if (schedule.type === 'loading') {
+    return <>Loading</>;
+  }
+  if (schedule.type === 'error') {
+    return <>{schedule.reason}</>;
   }
 
   return (
     <div className="flex flex-wrap flex-auto">
-      {schedule.map(schedule => {
+      {schedule.data.map(schedule => {
         return (
           <table>
             <tbody className="text-left border border-gray-400">
