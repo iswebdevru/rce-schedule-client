@@ -7,10 +7,10 @@ export type ScheduleProps = {
 
 export function Schedule({ data }: ScheduleProps) {
   return (
-    <div className="flex flex-wrap flex-auto  ">
+    <div className="flex flex-wrap flex-auto">
       {data.map(schedule => {
         return (
-          <table className="flex-bas basis-1/3" key={schedule.group}>
+          <table className="basis-1/3" key={schedule.group}>
             <tbody className="text-left border border-gray-400">
               <tr>
                 <th

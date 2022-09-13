@@ -1,49 +1,38 @@
 import { ChangeEvent, useEffect, useId, useReducer, useState } from 'react';
 import { Schedule } from './components/Schedule';
+import { TableSkeleton } from './components/TableSkeleton';
 import { scheduleReducer } from './schedule-reducer';
 import { ScheduleResponseSchema } from './schemas';
 
-function InformationForm() {
-  const groupInputId = useId();
-  const dayInputId = useId();
+const RCE_API = 'https://rce-schedule-api.up.railway.app';
 
-  return (
-    <div className="p-4">
-      <div className="flex flex-col">
-        <label htmlFor={groupInputId}>Группа</label>
-        <input
-          type="text"
-          name="group"
-          id={groupInputId}
-          defaultValue={'ИС-203'}
-          className="border-2 border-gray-500 px-2 py-1"
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor={dayInputId}>День</label>
-        <input
-          type="text"
-          name="day"
-          id={dayInputId}
-          defaultValue={'Сегодня'}
-          className="border-2 border-gray-500 px-2 py-1"
-        />
-      </div>
-    </div>
-  );
+interface DayWithChanges {
+  day: number;
+  month: number;
+  year: number;
+  version: number;
 }
 
 export function App() {
   const [schedule, dispatch] = useReducer(scheduleReducer, { type: 'loading' });
-  const [groupFilter, setGroupFilter] = useState('');
+  const [daysWithChanges, setDaysWithChanges] = useState<string[]>([]);
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const [selectedDay, setSelectedDay] = useState('');
+
+  useEffect(() => {
+    getDaysWithChanges();
+  }, []);
 
   useEffect(() => {
     getSchedule();
-  }, []);
+  }, [selectedDay]);
 
   const getSchedule = async () => {
+    dispatch({
+      type: 'WAIT',
+    });
     const data = await (
-      await fetch('https://rce-schedule-api.up.railway.app/schedule')
+      await fetch(`${RCE_API}/schedule${selectedDay}`)
     ).json();
     const validatedScheduleResponse = ScheduleResponseSchema.safeParse(data);
 
@@ -67,34 +56,66 @@ export function App() {
     }
   };
 
-  const onGroupFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setGroupFilter(e.currentTarget.value);
+  const getDaysWithChanges = async () => {
+    const days = (await (
+      await fetch(`${RCE_API}/days-with-changes`)
+    ).json()) as DayWithChanges[];
+    setDaysWithChanges(
+      days.map(date => `?day=${date.day}&month=${date.month}&year=${date.year}`)
+    );
   };
 
+  const onSelectedGroupChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedGroup(e.currentTarget.value);
+  };
+
+  const onSelectedDayChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedDay(e.currentTarget.value);
+  };
+  let tablePart: any;
   if (schedule.type === 'loading') {
-    return <>Loading</>;
-  }
-  if (schedule.type === 'error') {
-    return <>{schedule.reason}</>;
+    tablePart = <TableSkeleton count={9} />;
+  } else if (schedule.type === 'error') {
+    tablePart = <>{schedule.reason}</>;
+  } else {
+    tablePart = (
+      <Schedule
+        data={schedule.data.filter(({ group }) =>
+          new RegExp(selectedGroup, 'i').test(group)
+        )}
+      />
+    );
   }
   return (
     <div className="max-w-screen-lg mx-auto flex flex-col gap-4">
-      <div className="flex flex-col">
-        <label htmlFor="">Группа:</label>
-        <input
-          type="text"
-          className="p-4 border border-gray-700"
-          value={groupFilter}
-          onChange={onGroupFilterChange}
-        />
+      <div className="flex gap-4">
+        <div className="flex flex-col">
+          <label htmlFor="" className="text-lg font-semibold mb-1">
+            Группа:
+          </label>
+          <input
+            type="text"
+            className="p-2 border border-gray-700 rounded-md"
+            value={selectedGroup}
+            onChange={onSelectedGroupChange}
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="" className="text-lg font-semibold mb-1">
+            Дата:
+          </label>
+          <select
+            value={selectedDay}
+            onChange={onSelectedDayChange}
+            className="p-2 border border-gray-700 rounded-md"
+          >
+            {daysWithChanges.map(day => {
+              return <option value={day}>{day}</option>;
+            })}
+          </select>
+        </div>
       </div>
-      <div>
-        <Schedule
-          data={schedule.data.filter(({ group }) =>
-            new RegExp(groupFilter, 'i').test(group)
-          )}
-        />
-      </div>
+      <div>{tablePart}</div>
     </div>
   );
 }
