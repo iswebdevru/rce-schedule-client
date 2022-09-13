@@ -11,7 +11,7 @@ export function TableSkeleton({ count = 1 }: { count?: number }) {
     <div className="flex flex-wrap flex-auto">
       {repeat(
         count,
-        <table className="basis-1/3">
+        <table className="basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
           <tbody className="text-left border border-gray-400 relative">
             <tr>
               <th className="p-2 text-xl border border-gray-400" colSpan={3}>

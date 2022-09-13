@@ -74,7 +74,7 @@ export function App() {
   };
   let tablePart: any;
   if (schedule.type === 'loading') {
-    tablePart = <TableSkeleton count={9} />;
+    tablePart = <TableSkeleton count={12} />;
   } else if (schedule.type === 'error') {
     tablePart = <>{schedule.reason}</>;
   } else {
@@ -87,8 +87,8 @@ export function App() {
     );
   }
   return (
-    <div className="max-w-screen-lg mx-auto flex flex-col gap-4">
-      <div className="flex gap-4">
+    <div className="px-4 max-w-screen-xl mx-auto flex flex-col gap-4">
+      <div className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col">
           <label htmlFor="" className="text-lg font-semibold mb-1">
             Группа:
