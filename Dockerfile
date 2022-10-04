@@ -2,10 +2,10 @@ FROM node:16 AS build
 
 WORKDIR /usr/client
 
-COPY package*.json .
+COPY package*.json ./
 
 RUN npm install
-COPY . .
+COPY . ./
 RUN npm run build
 
 FROM nginx:alpine
