@@ -4,7 +4,7 @@ import { TableSkeleton } from './components/TableSkeleton';
 import { scheduleReducer } from './schedule-reducer';
 import { ScheduleResponseSchema } from './schemas';
 
-const RCE_API = 'http://api.rcebot.tk/';
+const RCE_API = 'http://api.rcebot.tk';
 
 interface DayWithChanges {
   day: number;
