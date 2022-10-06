@@ -6,4 +6,4 @@ jobs:
     runs-on: main
     steps:
       - uses: actions/checkout@v3
-      - run: docker-compose up -d --build
+      - run: docker compose up -d --build
