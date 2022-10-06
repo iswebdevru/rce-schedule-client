@@ -27,5 +27,5 @@ export function toHumanReadableDate(day: DayWithChanges) {
 
   return `${DAYS_OF_THE_WEEK[date.getDay()]} ${adjustDate(
     day.day
-  )}.${adjustDate(day.month + 1)}`;
+  )}.${adjustDate(day.month)}`;
 }
