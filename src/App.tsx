@@ -119,8 +119,13 @@ export function App() {
   } else {
     tablePart = (
       <Schedule
-        data={schedule.data.filter(({ group }) =>
-          new RegExp(selectedGroup, 'i').test(group)
+        data={schedule.data.filter(
+          ({ group }) =>
+            group
+              .toLowerCase()
+              .replace('-', '')
+              .startsWith(selectedGroup.toLowerCase()) ||
+            group.toLowerCase().startsWith(selectedGroup.toLowerCase())
         )}
       />
     );
