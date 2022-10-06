@@ -119,14 +119,16 @@ export function App() {
   } else {
     tablePart = (
       <Schedule
-        data={schedule.data.filter(
-          ({ group }) =>
-            group
-              .toLowerCase()
-              .replace('-', '')
-              .startsWith(selectedGroup.toLowerCase()) ||
-            group.toLowerCase().startsWith(selectedGroup.toLowerCase())
-        )}
+        data={schedule.data.filter(({ group }) => {
+          const [name, cabinet] = group.split('-');
+          return (
+            name
+              .toUpperCase()
+              .startsWith(
+                selectedGroup.replace(/[^а-я]/gi, '').toUpperCase()
+              ) && cabinet.startsWith(selectedGroup.replace(/\D/g, ''))
+          );
+        })}
       />
     );
   }
