@@ -10,6 +10,14 @@ export interface SettingsProps {
   days: DayWithChanges[];
 }
 
+function InputSkeleton() {
+  return (
+    <div className="flex w-36 h-10 border rounded-md border-gray-700 ">
+      <div className="animate-pulse bg-gray-300 w-[90%] h-2/3 rounded-md m-auto"></div>
+    </div>
+  );
+}
+
 export function Settings({
   selectedGroup,
   onSelectedGroupChange,
@@ -34,7 +42,7 @@ export function Settings({
         <label htmlFor="" className="text-lg font-semibold mb-1">
           Дата:
         </label>
-        {selectedDay !== null && (
+        {selectedDay !== null ? (
           <select
             value={selectedDay}
             onChange={onSelectedDayChange}
@@ -44,6 +52,8 @@ export function Settings({
               return <option value={i}>{toHumanReadableDate(day)}</option>;
             })}
           </select>
+        ) : (
+          <InputSkeleton />
         )}
       </div>
     </div>
