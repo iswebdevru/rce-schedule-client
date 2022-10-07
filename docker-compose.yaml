@@ -1,5 +1,6 @@
 services:
   main:
+    restart: always
     build: .
     ports:
       - '8081:80'
