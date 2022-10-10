@@ -6,7 +6,7 @@ function Cell() {
   );
 }
 
-export function TableSkeleton({ count = 1 }: { count?: number }) {
+export function ScheduleSkeleton({ count = 1 }: { count?: number }) {
   return (
     <div className="flex flex-wrap flex-auto">
       {repeat(

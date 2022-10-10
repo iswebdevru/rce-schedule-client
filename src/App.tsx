@@ -1,7 +1,6 @@
 import { ChangeEventHandler, useEffect, useReducer, useState } from 'react';
 import { Schedule } from './components/Schedule';
 import { Settings } from './components/Settings';
-import { TableSkeleton } from './components/TableSkeleton';
 import { scheduleReducer } from './schedule-reducer';
 import { ScheduleResponseSchema } from './schemas';
 import { GROUP } from './storage';
@@ -75,14 +74,17 @@ export function App() {
   };
 
   const fetchSchedule = async () => {
-    dispatch({
-      type: 'WAIT',
-    });
+    dispatch({ type: 'WAIT' });
     const { day, month, year } = days[selectedDay as number];
-    const getParams = `?day=${day}&month=${month}&year=${year}`;
-    const data = await (await fetch(`${RCE_API}/schedule${getParams}`)).json();
+    const searchParams = new URLSearchParams({
+      day: `${day}`,
+      month: `${month}`,
+      year: `${year}`,
+    }).toString();
+    const data = await (
+      await fetch(`${RCE_API}/schedule?${searchParams}`)
+    ).json();
     const validatedScheduleResponse = ScheduleResponseSchema.safeParse(data);
-
     if (validatedScheduleResponse.success) {
       if (validatedScheduleResponse.data.error === null) {
         dispatch({
@@ -111,27 +113,6 @@ export function App() {
     setSelectedDay(+e.currentTarget.value);
   };
 
-  let tablePart: any;
-  if (schedule.type === 'loading') {
-    tablePart = <TableSkeleton count={12} />;
-  } else if (schedule.type === 'error') {
-    tablePart = <>{schedule.reason}</>;
-  } else {
-    tablePart = (
-      <Schedule
-        data={schedule.data.filter(({ group }) => {
-          const [name, cabinet] = group.split('-');
-          return (
-            name
-              .toUpperCase()
-              .startsWith(
-                selectedGroup.replace(/[^а-я]/gi, '').toUpperCase()
-              ) && cabinet.startsWith(selectedGroup.replace(/\D/g, ''))
-          );
-        })}
-      />
-    );
-  }
   return (
     <div className="px-4 max-w-screen-xl mx-auto flex flex-col gap-4">
       <Settings
@@ -141,7 +122,7 @@ export function App() {
         onSelectedDayChange={onSelectedDayChange}
         days={days}
       />
-      <div>{tablePart}</div>
+      <Schedule state={schedule} filters={{ group: selectedGroup }} />
     </div>
   );
 }

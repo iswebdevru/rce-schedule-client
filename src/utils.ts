@@ -23,9 +23,21 @@ function adjustDate(n: number) {
 
 export function toHumanReadableDate(day: DayWithChanges) {
   const date = new Date(day.year, day.month - 1, day.day);
-  console.log(date);
-
   return `${DAYS_OF_THE_WEEK[date.getDay()]} ${adjustDate(
     day.day
   )}.${adjustDate(day.month)}`;
+}
+
+export function groupFilter(group: string, search: string) {
+  if (!search.length) {
+    return true;
+  }
+  const [name, cabinet] = group.split('-');
+  console.log(`^${search.replace(/[^а-я]/gi, '')}`);
+  console.log(`^${search.replace(/\D/g, '')}`);
+
+  return (
+    new RegExp(`^${search.replace(/[^а-я]/gi, '')}`, 'i').test(name) &&
+    new RegExp(`^${search.replace(/\D/g, '')}`).test(cabinet)
+  );
 }
