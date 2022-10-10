@@ -5,7 +5,7 @@ import { createDateId, toHumanReadableDate } from '../utils';
 export interface SettingsProps {
   selectedGroup: string;
   onSelectedGroupChange: ChangeEventHandler<HTMLInputElement>;
-  selectedDay: number | null;
+  selectedDay: number;
   onSelectedDayChange: ChangeEventHandler<HTMLSelectElement>;
   days: DayWithChanges[];
 }
@@ -38,7 +38,7 @@ export function Settings({
       </div>
       <div className="flex flex-col">
         <label className="text-lg font-semibold mb-1">Дата:</label>
-        {selectedDay !== null ? (
+        {days.length ? (
           <select
             value={selectedDay}
             onChange={onSelectedDayChange}

@@ -16,7 +16,7 @@ export function App() {
   const [selectedGroup, setSelectedGroup] = useState(
     localStorage.getItem(GROUP) || ''
   );
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [selectedDay, setSelectedDay] = useState(0);
   const prevBetaPopUpState = localStorage.getItem(SHOW_BETA_BANNER);
   const [showBetaPopUp, setShowBetaPopUp] = useState(
     prevBetaPopUpState === 'false' ? false : true
@@ -27,10 +27,10 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    if (selectedDay !== null) {
+    if (days.length) {
       fetchSchedule();
     }
-  }, [selectedDay]);
+  }, [days, selectedDay]);
 
   useEffect(() => {
     if (localStorage.getItem(GROUP) !== selectedGroup) {
@@ -41,41 +41,6 @@ export function App() {
   useEffect(() => {
     localStorage.setItem(SHOW_BETA_BANNER, showBetaPopUp.toString());
   }, [showBetaPopUp]);
-
-  useEffect(() => {
-    if (days.length) {
-      const today = new Date();
-      let todayIndex = -1;
-      let freshestIndex: number = -1;
-
-      for (let i = 0; i < days.length; i++) {
-        if (
-          days[i].day === today.getDate() &&
-          days[i].month === today.getMonth() + 1 &&
-          days[i].year === today.getFullYear()
-        ) {
-          todayIndex = i;
-          break;
-        }
-        if (
-          freshestIndex === -1 ||
-          new Date(days[i].year, days[i].month - 1, days[i].day) >
-            new Date(
-              days[freshestIndex].year,
-              days[freshestIndex].month - 1,
-              days[freshestIndex].day
-            )
-        ) {
-          freshestIndex = i;
-        }
-      }
-      if (todayIndex !== -1) {
-        setSelectedDay(todayIndex);
-      } else {
-        setSelectedDay(freshestIndex);
-      }
-    }
-  }, [days]);
 
   const fetchDays = () => {
     fetch(`${RCE_API}/days-with-changes`)
