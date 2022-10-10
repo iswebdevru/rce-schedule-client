@@ -1,9 +1,10 @@
+import { Fragment } from 'react';
 import { DayWithChanges } from './types';
 
-export const repeat = <T>(count: number, value: T) => {
+export const repeat = (count: number, value: JSX.Element) => {
   return Array(count)
     .fill(0)
-    .map(() => value);
+    .map((_, i) => <Fragment key={i}>{value}</Fragment>);
 };
 
 const DAYS_OF_THE_WEEK: Record<number, string> = {
@@ -33,11 +34,12 @@ export function groupFilter(group: string, search: string) {
     return true;
   }
   const [name, cabinet] = group.split('-');
-  console.log(`^${search.replace(/[^а-я]/gi, '')}`);
-  console.log(`^${search.replace(/\D/g, '')}`);
-
   return (
     new RegExp(`^${search.replace(/[^а-я]/gi, '')}`, 'i').test(name) &&
     new RegExp(`^${search.replace(/\D/g, '')}`).test(cabinet)
   );
+}
+
+export function createDateId({ day, month, year, version }: DayWithChanges) {
+  return `${day}${month}${year}${version}`;
 }

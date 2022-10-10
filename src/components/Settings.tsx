@@ -1,6 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import { DayWithChanges } from '../types';
-import { toHumanReadableDate } from '../utils';
+import { createDateId, toHumanReadableDate } from '../utils';
 
 export interface SettingsProps {
   selectedGroup: string;
@@ -28,9 +28,7 @@ export function Settings({
   return (
     <div className="flex flex-col md:flex-row gap-4">
       <div className="flex flex-col">
-        <label htmlFor="" className="text-lg font-semibold mb-1">
-          Группа:
-        </label>
+        <label className="text-lg font-semibold mb-1">Группа:</label>
         <input
           type="text"
           className="p-2 border border-gray-700 rounded-md"
@@ -39,9 +37,7 @@ export function Settings({
         />
       </div>
       <div className="flex flex-col">
-        <label htmlFor="" className="text-lg font-semibold mb-1">
-          Дата:
-        </label>
+        <label className="text-lg font-semibold mb-1">Дата:</label>
         {selectedDay !== null ? (
           <select
             value={selectedDay}
@@ -49,7 +45,11 @@ export function Settings({
             className="p-2 border border-gray-700 rounded-md"
           >
             {days.map((day, i) => {
-              return <option value={i}>{toHumanReadableDate(day)}</option>;
+              return (
+                <option key={createDateId(day)} value={i}>
+                  {toHumanReadableDate(day)}
+                </option>
+              );
             })}
           </select>
         ) : (
