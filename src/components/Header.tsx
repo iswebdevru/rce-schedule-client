@@ -25,35 +25,35 @@ export function Header() {
           <span className="block w-full h-1 bg-white"></span>
         </button>
         <div
-          className={`fixed z-40 inset-0 flex transition-all md:static md:block ${
-            isMenuOpened ? '' : 'translate-x-full'
-          } md:translate-x-0`}
+          className={`bg-[#0007] transition-opacity fixed inset-0 z-30 md:hidden ${
+            isMenuOpened ? '' : 'opacity-0 pointer-events-none'
+          }`}
+          onClick={handleMenuState}
+        ></div>
+        <div
+          className={`bg-primary-900 p-5 fixed top-0 left-0 bottom-0 right-1/3 z-40 overflow-y-auto transition-transform md:static md:p-0 md:translate-x-0 ${
+            isMenuOpened ? 'translate-x-0' : '-translate-x-full'
+          }`}
         >
-          <div
-            className="bg-[#0007] basis-1/3 md:hidden"
-            onClick={handleMenuState}
-          ></div>
-          <div className="bg-primary-900 p-5 basis-2/3 md:p-0 overflow-y-auto">
-            <nav>
-              <ul className="flex flex-col items-end gap-12 my-12 md:my-0 md:gap-28 md:flex-row">
-                <li>
-                  <a href="https://xn--j1al4b.xn--p1ai/" target="blank">
-                    САЙТ КОЛЛЕДЖА
-                  </a>
-                </li>
-                <li>
-                  <a href="https://vk.com/rcenext" target="blank">
-                    ГРУППА ВК
-                  </a>
-                </li>
-                <li>
-                  <a href="https://vk.com/wardxela" target="blank">
-                    ОБРАТНАЯ СВЯЗЬ
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+          <nav>
+            <ul className="flex flex-col items-start gap-12 my-12 md:my-0 md:gap-28 md:flex-row">
+              <li>
+                <a href="https://xn--j1al4b.xn--p1ai/" target="blank">
+                  САЙТ КОЛЛЕДЖА
+                </a>
+              </li>
+              <li>
+                <a href="https://vk.com/rcenext" target="blank">
+                  ГРУППА ВК
+                </a>
+              </li>
+              <li>
+                <a href="https://vk.com/wardxela" target="blank">
+                  ОБРАТНАЯ СВЯЗЬ
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
     </header>
