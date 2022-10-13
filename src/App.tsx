@@ -1,5 +1,6 @@
 import { ChangeEventHandler, useEffect, useReducer, useState } from 'react';
 import { BetaBanner } from './components/BetaBanner';
+import { Header } from './components/Header';
 import { PopUp } from './components/PopUp';
 import { Schedule } from './components/Schedule';
 import { Settings } from './components/Settings';
@@ -89,8 +90,9 @@ export function App() {
   };
 
   return (
-    <div>
-      <div className="px-4 max-w-screen-xl mx-auto flex flex-col gap-4">
+    <>
+      <Header />
+      <div className="px-4 py-4 max-w-screen-xl mx-auto flex flex-col gap-4 md:py-8">
         <Settings
           selectedGroup={selectedGroup}
           onSelectedGroupChange={onSelectedGroupChange}
@@ -103,6 +105,6 @@ export function App() {
       <PopUp show={showBetaPopUp}>
         <BetaBanner closeHandler={() => setShowBetaPopUp(false)} />
       </PopUp>
-    </div>
+    </>
   );
 }
