@@ -42,7 +42,7 @@ export function Header() {
                   </a>
                 </li>
                 <li>
-                  <a href="https://vk.com/bealyash" target="blank">
+                  <a href="https://vk.com/rcenext" target="blank">
                     ГРУППА ВК
                   </a>
                 </li>
