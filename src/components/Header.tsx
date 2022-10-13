@@ -17,12 +17,12 @@ export function Header() {
           </span>
         </a>
         <button
-          className="w-9 h-7 relative mb-4 md:hidden"
+          className="w-9 h-7 flex flex-col justify-between md:hidden"
           onClick={handleMenuState}
         >
-          <span className="absolute transition-all block w-full h-1 bg-white top-0"></span>
-          <span className="absolute transition-all block w-full h-1 bg-white top-1/2 -translate-y-1/2"></span>
-          <span className="absolute transition-all block w-full h-1 bg-white bottom-0"></span>
+          <span className="block w-full h-1 bg-white"></span>
+          <span className="block w-full h-1 bg-white"></span>
+          <span className="block w-full h-1 bg-white"></span>
         </button>
         <div
           className={`fixed z-40 inset-0 flex transition-all md:static md:block ${
