@@ -32,26 +32,26 @@ export function Schedule({ state, filters }: ScheduleProps) {
                 <table className="border-none w-full">
                   <tbody>
                     <tr>
-                      <th className="w-[10%] font-extralight text-lg border-b border-r px-2 py-1">
+                      <th className="w-[10%] font-extralight text-lg border-b border-r px-3 py-1">
                         №
                       </th>
-                      <th className="w-[75%] font-extralight text-lg border-b border-r px-2 py-1">
+                      <th className="w-[75%] font-extralight text-lg border-b border-r px-3 py-1 text-left">
                         Предмет
                       </th>
-                      <th className="w-[20%] font-extralight text-lg border-b group-last:border-b-0 px-2 py-1">
+                      <th className="w-[20%] font-extralight text-lg border-b group-last:border-b-0 px-3 py-1">
                         Каб
                       </th>
                     </tr>
                     {schedule.subjects.map(subject => {
                       return (
                         <tr key={subject.index} className="group">
-                          <td className="w-[10%] text-lg text-center border-b border-r group-last:border-b-0 px-2 py-1">
+                          <td className="w-[10%] text-lg text-center border-b border-r group-last:border-b-0 px-3 py-1">
                             {subject.index}
                           </td>
-                          <td className="w-[75%] border-b border-r group-last:border-b-0 px-2 py-1">
+                          <td className="w-[75%] border-b border-r group-last:border-b-0 px-3 py-1">
                             {subject.title}
                           </td>
-                          <td className="w-[20%] text-center border-b group-last:border-b-0 px-2 py-1">
+                          <td className="w-[20%] text-center border-b group-last:border-b-0 px-3 py-1">
                             {subject.cabinet}
                           </td>
                         </tr>
