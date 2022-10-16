@@ -26,12 +26,12 @@ export function Settings({
   days,
 }: SettingsProps) {
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col mb-6 md:mb-10 md:flex-row gap-4">
       <div className="flex flex-col">
         <label className="text-lg font-semibold mb-1">Группа:</label>
         <input
           type="text"
-          className="p-2 border border-gray-700 rounded-md"
+          className="px-4 py-2 border border-gray-400 rounded-md"
           value={selectedGroup}
           onChange={onSelectedGroupChange}
         />
@@ -42,7 +42,7 @@ export function Settings({
           <select
             value={selectedDay}
             onChange={onSelectedDayChange}
-            className="p-2 border border-gray-700 rounded-md"
+            className="p-2 border border-gray-400 rounded-md"
           >
             {days.map((day, i) => {
               return (

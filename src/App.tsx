@@ -92,7 +92,7 @@ export function App() {
   return (
     <>
       <Header />
-      <div className="px-4 py-4 max-w-screen-xl mx-auto flex flex-col gap-4 md:py-8">
+      <div className="px-4 py-4 max-w-7xl mx-auto md:py-8">
         <Settings
           selectedGroup={selectedGroup}
           onSelectedGroupChange={onSelectedGroupChange}
