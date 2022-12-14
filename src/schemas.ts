@@ -25,7 +25,7 @@ export const SubjectSchema = z.object({
 
 export const ScheduleSchema = z.object({
   group: z.string(),
-  subjects: SubjectSchema.array(),
+  subjects: SubjectSchema.nullable().array(),
 });
 
 export const ScheduleResponseSchema = createErrorProneSchema(
