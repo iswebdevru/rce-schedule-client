@@ -1,8 +1,7 @@
-import { PropsWithChildren } from 'react';
+import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import { ScheduleState } from '../schedule-reducer';
 import { groupFilter, repeat } from '../utils';
 import Container from './Container';
-import styles from './Schedule.module.css';
 
 export interface ScheduleProps {
   state: ScheduleState;
@@ -30,7 +29,7 @@ export function Schedule({ state, filters }: ScheduleProps) {
         .filter(({ group }) => groupFilter(group, filters.group))
         .map(schedule => {
           return (
-            <div key={schedule.group} className={styles.schedule}>
+            <ScheduleWrapper key={schedule.group}>
               <h2 className="text-xl font-medium mx-4 mt-3 dark:text-neutral-300">
                 {schedule.group}
               </h2>
@@ -38,35 +37,29 @@ export function Schedule({ state, filters }: ScheduleProps) {
                 <table className="border-none w-full">
                   <tbody className="dark:text-neutral-400">
                     <tr>
-                      <th className={styles.leftTD}>№</th>
-                      <th className={styles.middleTD}>Предмет</th>
-                      <th className={styles.rightTD}>Каб</th>
+                      <ScheduleSideCell>№</ScheduleSideCell>
+                      <ScheduleMiddleCell>Предмет</ScheduleMiddleCell>
+                      <ScheduleSideCell>Каб</ScheduleSideCell>
                     </tr>
                     {schedule.subjects.map((subject, i) => {
                       return (
                         <tr key={subject?.index ?? i} className="group">
-                          <td
-                            className={`${styles.leftTD} group-last:border-b-0`}
-                          >
+                          <ScheduleSideCell>
                             {subject?.index ?? ''}
-                          </td>
-                          <td
-                            className={`${styles.middleTD} group-last:border-b-0`}
-                          >
+                          </ScheduleSideCell>
+                          <ScheduleMiddleCell>
                             {subject?.title ?? ''}
-                          </td>
-                          <td
-                            className={`${styles.rightTD} group-last:border-b-0`}
-                          >
+                          </ScheduleMiddleCell>
+                          <ScheduleSideCell>
                             {subject?.cabinet ?? ''}
-                          </td>
+                          </ScheduleSideCell>
                         </tr>
                       );
                     })}
                   </tbody>
                 </table>
               </div>
-            </div>
+            </ScheduleWrapper>
           );
         })}
     </ScheduleContainer>
@@ -84,7 +77,7 @@ function ScheduleSkeleton({ count = 1 }: { count?: number }) {
     <>
       {repeat(
         count,
-        <div className={styles.schedule}>
+        <ScheduleWrapper>
           <h2 className="text-xl font-medium mx-4 mt-3">
             <AnimatedCell />
           </h2>
@@ -94,23 +87,49 @@ function ScheduleSkeleton({ count = 1 }: { count?: number }) {
                 {repeat(
                   6,
                   <tr className="group">
-                    <td className={`${styles.leftTD} group-last:border-b-0`}>
+                    <ScheduleSideCell>
                       <AnimatedCell />
-                    </td>
-                    <td className={`${styles.middleTD} group-last:border-b-0`}>
+                    </ScheduleSideCell>
+                    <ScheduleMiddleCell>
                       <AnimatedCell />
-                    </td>
-                    <td className={`${styles.rightTD} group-last:border-b-0`}>
+                    </ScheduleMiddleCell>
+                    <ScheduleSideCell>
                       <AnimatedCell />
-                    </td>
+                    </ScheduleSideCell>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
-        </div>
+        </ScheduleWrapper>
       )}
     </>
+  );
+}
+
+function ScheduleWrapper({ children }: PropsWithChildren) {
+  return (
+    <div className="border border-slate-200 shadow-sm rounded-lg basis-full md:basis-80 dark:border-neutral-800">
+      {children}
+    </div>
+  );
+}
+
+function ScheduleSideCell({ children }: PropsWithChildren) {
+  return (
+    <ScheduleCell className="w-[15%] text-center">{children}</ScheduleCell>
+  );
+}
+function ScheduleMiddleCell({ children }: PropsWithChildren) {
+  return <ScheduleCell className="w-[70%] text-left">{children}</ScheduleCell>;
+}
+
+function ScheduleCell(props: ComponentPropsWithoutRef<'td'>) {
+  return (
+    <td
+      {...props}
+      className={`font-extralight border-slate-200 border-b border-r px-3 py-1 dark:border-neutral-800 last:border-r-0 group-last:border-b-0 ${props.className}`}
+    />
   );
 }
 

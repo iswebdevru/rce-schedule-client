@@ -13,8 +13,8 @@ export interface SettingsProps {
 
 function InputSkeleton() {
   return (
-    <div className="flex min-w-[180px] p-2 border rounded-md border-gray-700">
-      <div className="h-6 w-full animate-pulse bg-gray-300 rounded-md"></div>
+    <div className="flex min-w-[180px] h-[36px] items-center px-2 border rounded-md border-gray-700 dark:border-neutral-800">
+      <div className="h-6 w-full animate-pulse bg-gray-300 rounded-md dark:bg-neutral-800"></div>
     </div>
   );
 }
