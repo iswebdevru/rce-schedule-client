@@ -1,6 +1,7 @@
 import { ChangeEventHandler } from 'react';
 import { DayWithChanges } from '../types';
 import { createDateId, toHumanReadableDate } from '../utils';
+import Container from './Container';
 
 export interface SettingsProps {
   selectedGroup: string;
@@ -26,36 +27,40 @@ export function Settings({
   days,
 }: SettingsProps) {
   return (
-    <div className="flex flex-col mb-6 md:mb-10 md:flex-row gap-4">
-      <div className="flex flex-col">
-        <label className="text-lg font-semibold mb-1">Группа:</label>
-        <input
-          type="text"
-          className="px-4 py-2 border border-gray-400 rounded-md"
-          value={selectedGroup}
-          onChange={onSelectedGroupChange}
-        />
-      </div>
-      <div className="flex flex-col">
-        <label className="text-lg font-semibold mb-1">Дата:</label>
-        {days.length ? (
-          <select
-            value={selectedDay}
-            onChange={onSelectedDayChange}
-            className="p-2 border border-gray-400 rounded-md"
-          >
-            {days.map((day, i) => {
-              return (
-                <option key={createDateId(day)} value={i}>
-                  {toHumanReadableDate(day)}
-                </option>
-              );
-            })}
-          </select>
-        ) : (
-          <InputSkeleton />
-        )}
-      </div>
+    <div className="mb-6">
+      <Container>
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex flex-col">
+            <label className="text-lg font-semibold mb-1">Группа:</label>
+            <input
+              type="text"
+              className="px-4 py-2 border border-gray-400 rounded-md"
+              value={selectedGroup}
+              onChange={onSelectedGroupChange}
+            />
+          </div>
+          <div className="flex flex-col">
+            <label className="text-lg font-semibold mb-1">Дата:</label>
+            {days.length ? (
+              <select
+                value={selectedDay}
+                onChange={onSelectedDayChange}
+                className="p-2 border border-gray-400 rounded-md"
+              >
+                {days.map((day, i) => {
+                  return (
+                    <option key={createDateId(day)} value={i}>
+                      {toHumanReadableDate(day)}
+                    </option>
+                  );
+                })}
+              </select>
+            ) : (
+              <InputSkeleton />
+            )}
+          </div>
+        </div>
+      </Container>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { ChangeEventHandler, useEffect, useReducer, useState } from 'react';
 import { BetaBanner } from './components/BetaBanner';
+import Container from './components/Container';
 import { Header } from './components/Header';
 import { PopUp } from './components/PopUp';
 import { Schedule } from './components/Schedule';
@@ -92,16 +93,14 @@ export function App() {
   return (
     <>
       <Header />
-      <div className="px-4 py-4 max-w-7xl mx-auto md:py-8">
-        <Settings
-          selectedGroup={selectedGroup}
-          onSelectedGroupChange={onSelectedGroupChange}
-          selectedDay={selectedDay}
-          onSelectedDayChange={onSelectedDayChange}
-          days={days}
-        />
-        <Schedule state={schedule} filters={{ group: selectedGroup }} />
-      </div>
+      <Settings
+        selectedGroup={selectedGroup}
+        onSelectedGroupChange={onSelectedGroupChange}
+        selectedDay={selectedDay}
+        onSelectedDayChange={onSelectedDayChange}
+        days={days}
+      />
+      <Schedule state={schedule} filters={{ group: selectedGroup }} />
       <PopUp show={showBetaPopUp}>
         <BetaBanner closeHandler={() => setShowBetaPopUp(false)} />
       </PopUp>
