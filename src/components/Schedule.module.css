@@ -1,0 +1,13 @@
+.schedule {
+  @apply bg-white border border-slate-200 shadow-sm rounded-lg basis-full md:basis-80 dark:bg-neutral-900 dark:border-neutral-800;
+}
+
+.leftTD {
+  @apply w-[15%] font-extralight text-center border-slate-200 border-b border-r px-3 py-1 dark:border-neutral-800;
+}
+.middleTD {
+  @apply w-[70%] font-extralight text-left border-slate-200 border-b border-r px-3 py-1  dark:border-neutral-800;
+}
+.rightTD {
+  @apply w-[15%] font-extralight text-center border-slate-200 border-b px-3 py-1 dark:border-neutral-800;
+}
