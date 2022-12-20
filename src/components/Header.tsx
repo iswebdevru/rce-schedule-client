@@ -18,9 +18,9 @@ export function Header() {
   };
 
   return (
-    <header className="bg-primary-900 text-white mb-4">
+    <header className="bg-slate-900 text-white mb-4">
       <Container>
-        <div className="flex justify-between items-center h-12">
+        <div className="flex justify-between items-center h-14">
           <a href="/" className="flex flex-col items-center">
             <img
               src={logo}
@@ -43,7 +43,7 @@ export function Header() {
             onClick={handleMenuState}
           ></div>
           <div
-            className={`bg-primary-900 fixed top-0 left-0 bottom-0 right-1/3 z-40 overflow-y-auto transition-transform md:static md:p-0 md:translate-x-0 ${
+            className={`bg-slate-900 fixed top-0 left-0 bottom-0 right-1/3 z-40 overflow-y-auto transition-transform md:static md:p-0 md:translate-x-0 ${
               isMenuOpened ? 'translate-x-0' : '-translate-x-full'
             }`}
           >

@@ -29,23 +29,23 @@ export function Settings({
   return (
     <div className="mb-6">
       <Container>
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col md:flex-row gap-2 sm:gap-4">
           <div className="flex flex-col">
-            <label className="text-lg font-semibold mb-1">Группа:</label>
+            <label className="text-lg font-semibold mb-2">Группа:</label>
             <input
               type="text"
-              className="px-4 py-2 border border-gray-400 rounded-md"
+              className="px-4 py-2 rounded-md transition-[outline] outline outline-1 outline-slate-400 focus:outline-slate-900"
               value={selectedGroup}
               onChange={onSelectedGroupChange}
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-lg font-semibold mb-1">Дата:</label>
+            <label className="text-lg font-semibold mb-2">Дата:</label>
             {days.length ? (
               <select
                 value={selectedDay}
                 onChange={onSelectedDayChange}
-                className="p-2 border border-gray-400 rounded-md"
+                className="p-2 rounded-md transition-[outline] outline outline-1 outline-slate-400 focus:outline-slate-900"
               >
                 {days.map((day, i) => {
                   return (

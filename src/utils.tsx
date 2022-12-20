@@ -43,3 +43,7 @@ export function groupFilter(group: string, search: string) {
 export function createDateId({ day, month, year, version }: DayWithChanges) {
   return `${day}${month}${year}${version}`;
 }
+
+export function standardDate(day: DayWithChanges) {
+  return `${adjustDate(day.day)}.${adjustDate(day.month)}.${day.year}`;
+}
