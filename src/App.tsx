@@ -5,9 +5,9 @@ import { Header } from './components/Header';
 import { PopUp } from './components/PopUp';
 import { Schedule } from './components/Schedule';
 import { Settings } from './components/Settings';
-import { scheduleReducer } from './schedule-reducer';
-import { ScheduleResponseSchema } from './schemas';
-import { GROUP, SHOW_BETA_BANNER } from './storage';
+import { scheduleReducer } from './lib/schedule-reducer';
+import { ScheduleResponseSchema } from './lib/schemas';
+import { GROUP, SHOW_BETA_BANNER } from './lib/storage';
 import { DayWithChanges } from './types';
 
 const RCE_API = 'https://api.rcebot.tk';

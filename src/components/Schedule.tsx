@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
-import { ScheduleState } from '../schedule-reducer';
+import { ScheduleState } from '../lib/schedule-reducer';
 import { groupFilter, repeat } from '../utils';
 import Container from './Container';
 
@@ -30,16 +30,22 @@ export function Schedule({ state, filters }: ScheduleProps) {
         .map(schedule => {
           return (
             <ScheduleWrapper key={schedule.group}>
-              <h2 className="text-xl font-medium mx-4 mt-3 dark:text-neutral-300">
+              <h2 className="text-xl font-medium mx-4 mt-3 dark:text-neutral-200">
                 {schedule.group}
               </h2>
               <div className="p-2">
                 <table className="border-none w-full">
-                  <tbody className="dark:text-neutral-400">
+                  <tbody className="dark:text-neutral-300">
                     <tr>
-                      <ScheduleSideCell>№</ScheduleSideCell>
-                      <ScheduleMiddleCell>Предмет</ScheduleMiddleCell>
-                      <ScheduleSideCell>Каб</ScheduleSideCell>
+                      <ScheduleSideCell>
+                        <span className="font-semibold">№</span>
+                      </ScheduleSideCell>
+                      <ScheduleMiddleCell>
+                        <span className="font-semibold">Предмет</span>
+                      </ScheduleMiddleCell>
+                      <ScheduleSideCell>
+                        <span className="font-semibold">Каб</span>
+                      </ScheduleSideCell>
                     </tr>
                     {schedule.subjects.map((subject, i) => {
                       return (
