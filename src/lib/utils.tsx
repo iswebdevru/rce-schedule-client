@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { DayWithChanges } from './types';
+import { DayWithChanges } from './api';
 
 export const repeat = (count: number, value: JSX.Element) => {
   return Array(count)
@@ -47,3 +47,6 @@ export function createDateId({ day, month, year, version }: DayWithChanges) {
 export function standardDate(day: DayWithChanges) {
   return `${adjustDate(day.day)}.${adjustDate(day.month)}.${day.year}`;
 }
+
+export const fetcher = async (url: string) =>
+  fetch(url).then(data => data.json());

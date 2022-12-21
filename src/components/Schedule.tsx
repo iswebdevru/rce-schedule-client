@@ -1,37 +1,41 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
-import { ScheduleState } from '../lib/schedule-reducer';
-import { groupFilter, repeat } from '../utils';
+import { useDaysWithChanges, useSchedule } from '../lib/api';
+import { groupFilter, repeat } from '../lib/utils';
 import Container from './Container';
 
 export interface ScheduleProps {
-  state: ScheduleState;
   filters: {
     group: string;
+    dayId: number;
   };
 }
 
-export function Schedule({ state, filters }: ScheduleProps) {
-  if (state.type === 'loading') {
+export function Schedule({ filters }: ScheduleProps) {
+  const { data: days } = useDaysWithChanges();
+  const {
+    data: schedule,
+    error,
+    isLoading,
+  } = useSchedule(days ? days[filters.dayId] : undefined);
+  if (isLoading || !schedule) {
     return (
       <ScheduleContainer>
         <ScheduleSkeleton count={12} />;
       </ScheduleContainer>
     );
   }
-
-  if (state.type === 'error') {
-    return <>{state.reason}</>;
+  if (error || schedule.error) {
+    return <>Ошибка: не удалось получить данные с сервера</>;
   }
-
   return (
     <ScheduleContainer>
-      {state.data
+      {schedule.data
         .filter(({ group }) => groupFilter(group, filters.group))
-        .map(schedule => {
+        .map(groupSchedule => {
           return (
-            <ScheduleWrapper key={schedule.group}>
+            <ScheduleWrapper key={groupSchedule.group}>
               <h2 className="text-xl font-medium mx-4 mt-3 dark:text-neutral-200">
-                {schedule.group}
+                {groupSchedule.group}
               </h2>
               <div className="p-2">
                 <table className="border-none w-full">
@@ -47,7 +51,7 @@ export function Schedule({ state, filters }: ScheduleProps) {
                         <span className="font-semibold">Каб</span>
                       </ScheduleSideCell>
                     </tr>
-                    {schedule.subjects.map((subject, i) => {
+                    {groupSchedule.subjects.map((subject, i) => {
                       return (
                         <tr key={subject?.index ?? i} className="group">
                           <ScheduleSideCell>
