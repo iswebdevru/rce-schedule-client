@@ -1,6 +1,8 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, useId } from 'react';
 import { useDaysWithChanges } from '../lib/api';
 import { createDateId, toHumanReadableDate } from '../lib/utils';
+import Label from './Label';
+import Select, { Option } from './Select';
 
 export interface SettingsProps {
   selectedGroup: string;
@@ -15,14 +17,16 @@ export function Settings({
   selectedDay,
   onSelectedDayChange,
 }: SettingsProps) {
+  const inputGroupId = useId();
   return (
     <div className="mb-6">
       <div className="flex flex-col md:flex-row gap-2 sm:gap-4">
         <div className="flex flex-col">
-          <label className="font-semibold mb-2 dark:text-neutral-400">
+          <Label className="mb-2" htmlFor={inputGroupId}>
             Группа:
-          </label>
+          </Label>
           <input
+            id={inputGroupId}
             type="text"
             className="px-4 py-2 text-sm rounded-md transition-[outline] outline outline-1 outline-slate-400 focus:outline-slate-900 dark:bg-neutral-900 dark:outline-neutral-800 dark:focus:outline-neutral-700 dark:text-neutral-300"
             value={selectedGroup}
@@ -46,6 +50,7 @@ interface SelectDayProps {
 }
 
 function SelectDay({ selectedDay, onSelectedDayChange }: SelectDayProps) {
+  const selectDayId = useId();
   const { data: days, isLoading, error } = useDaysWithChanges();
 
   let piece: JSX.Element;
@@ -60,28 +65,26 @@ function SelectDay({ selectedDay, onSelectedDayChange }: SelectDayProps) {
     piece = <>Нет изменений</>;
   } else {
     piece = (
-      <select
+      <Select
+        id={selectDayId}
         value={selectedDay}
         onChange={onSelectedDayChange}
-        className="p-2 rounded-md text-sm transition-[outline] outline outline-1 outline-slate-400 focus:outline-slate-900 dark:bg-neutral-900 dark:outline-neutral-800 dark:focus:outline-neutral-700 dark:text-neutral-300"
       >
         {days.map((day, i) => {
           return (
-            <option
-              key={createDateId(day)}
-              value={i}
-              className="dark:text-neutral-400"
-            >
+            <Option key={createDateId(day)} value={i}>
               {toHumanReadableDate(day)}
-            </option>
+            </Option>
           );
         })}
-      </select>
+      </Select>
     );
   }
   return (
     <>
-      <label className="font-semibold mb-2 dark:text-neutral-400">Дата:</label>
+      <Label className="mb-2" htmlFor={selectDayId}>
+        Дата:
+      </Label>
       {piece}
     </>
   );

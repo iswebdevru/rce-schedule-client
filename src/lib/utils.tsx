@@ -48,5 +48,15 @@ export function standardDate(day: DayWithChanges) {
   return `${adjustDate(day.day)}.${adjustDate(day.month)}.${day.year}`;
 }
 
+export function getHoursAndMinutes(ms: number) {
+  const date = new Date(ms);
+  const hours = date.getUTCHours();
+  const minutes = date.getUTCMinutes();
+  return {
+    hours: hours.toString(),
+    minutes: minutes > 9 ? minutes.toString() : `0${minutes}`,
+  };
+}
+
 export const fetcher = async (url: string) =>
   fetch(url).then(data => data.json());
