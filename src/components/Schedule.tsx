@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import { useDaysWithChanges, useSchedule } from '../lib/api';
 import { groupFilter, repeat } from '../lib/utils';
-import Container from './Container';
 
 export interface ScheduleProps {
   filters: {
@@ -145,10 +144,8 @@ function ScheduleCell(props: ComponentPropsWithoutRef<'td'>) {
 
 function ScheduleContainer({ children }: PropsWithChildren) {
   return (
-    <Container>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {children}
-      </div>
-    </Container>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {children}
+    </div>
   );
 }

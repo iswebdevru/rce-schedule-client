@@ -11,7 +11,7 @@ function NavLink(props: ComponentPropsWithoutRef<'a'>) {
   );
 }
 
-export function Header() {
+export default function Header() {
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const handleMenuState: MouseEventHandler = () => {
     setIsMenuOpened(prev => !prev);
