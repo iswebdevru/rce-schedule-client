@@ -1,21 +1,18 @@
-import { ComponentPropsWithoutRef, MouseEventHandler, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
+import { HeaderLinkProps, headerLinks } from '../lib/config';
+import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../img/logo.svg';
 import Container from './Container';
 
-function NavLink(props: ComponentPropsWithoutRef<'a'>) {
-  return (
-    <a
-      {...props}
-      className="block p-4 pl-6 font-semibold md:text-sm md:p-2 transition-colors uppercase text-slate-400 hover:text-slate-50 dark:text-neutral-300 dark:hover:text-neutral-200"
-    />
-  );
-}
-
 export default function Header() {
+  const location = useLocation();
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const handleMenuState: MouseEventHandler = () => {
     setIsMenuOpened(prev => !prev);
   };
+  useEffect(() => {
+    setIsMenuOpened(false);
+  }, [location]);
 
   return (
     <header className="bg-slate-900 text-white mb-4 dark:bg-neutral-800">
@@ -49,21 +46,11 @@ export default function Header() {
           >
             <nav>
               <ul className="flex flex-col my-12 gap-1 md:my-0 md:gap-10 md:flex-row">
-                <li>
-                  <NavLink href="https://xn--j1al4b.xn--p1ai/" target="blank">
-                    Сайт колледжа
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink href="https://vk.com/rcenext" target="blank">
-                    Группа VK
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink href="https://vk.com/wardxela" target="blank">
-                    Обратная связь
-                  </NavLink>
-                </li>
+                {headerLinks.map(linkProps => (
+                  <li key={linkProps.href}>
+                    <HeaderLink {...linkProps} />
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
@@ -71,4 +58,39 @@ export default function Header() {
       </Container>
     </header>
   );
+}
+
+function HeaderLink(props: HeaderLinkProps) {
+  if (props.kind === 'external') {
+    return (
+      <a
+        target="_blank"
+        href={props.href}
+        className={createHeaderLinkClassName({
+          isActive: false,
+        })}
+      >
+        {props.text}
+      </a>
+    );
+  }
+  return (
+    <NavLink to={props.href} className={createHeaderLinkClassName}>
+      {props.text}
+    </NavLink>
+  );
+}
+
+interface HeaderClassName {
+  isActive: boolean;
+}
+
+const headerLinkBaseClassName =
+  'block p-4 pl-6 font-semibold md:text-sm md:p-1 transition-colors uppercase';
+
+function createHeaderLinkClassName({ isActive }: HeaderClassName) {
+  if (isActive) {
+    return `${headerLinkBaseClassName} text-slate-50 dark:text-neutral-50`;
+  }
+  return `${headerLinkBaseClassName} text-slate-400 hover:text-slate-50 dark:text-neutral-400 dark:hover:text-neutral-50`;
 }
