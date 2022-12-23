@@ -1,15 +1,15 @@
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HeaderLinkProps, headerLinks } from '../lib/config';
 import { NavLink, useLocation } from 'react-router-dom';
 import logo from '../img/logo.svg';
 import Container from './Container';
+import ThemeToggler from './ThemeToggler';
 
 export default function Header() {
   const location = useLocation();
   const [isMenuOpened, setIsMenuOpened] = useState(false);
-  const handleMenuState: MouseEventHandler = () => {
-    setIsMenuOpened(prev => !prev);
-  };
+  const handleMenuState = () => setIsMenuOpened(prev => !prev);
+
   useEffect(() => {
     setIsMenuOpened(false);
   }, [location]);
@@ -40,19 +40,25 @@ export default function Header() {
             onClick={handleMenuState}
           ></div>
           <div
-            className={`bg-slate-900 dark:bg-neutral-800 md:bg-transparent fixed top-0 left-0 bottom-0 right-1/3 z-40 overflow-y-auto transition-transform md:static md:p-0 md:translate-x-0 ${
+            className={`flex flex-col justify-between bg-slate-900 dark:bg-neutral-900 px-4 py-12 md:bg-transparent fixed top-0 left-0 bottom-0 right-1/3 z-40 overflow-y-auto transition-transform md:static md:p-0 md:translate-x-0 md:flex-row md:items-center md:overflow-visible dark:md:bg-neutral-800 ${
               isMenuOpened ? 'translate-x-0' : '-translate-x-full'
             }`}
           >
             <nav>
-              <ul className="flex flex-col my-12 gap-1 md:my-0 md:gap-10 md:flex-row">
+              <ul className="flex flex-col gap-1 md:my-0 md:gap-10 md:flex-row">
                 {headerLinks.map(linkProps => (
-                  <li key={linkProps.href}>
+                  <li
+                    key={linkProps.href}
+                    className="border-b border-slate-800 dark:border-neutral-800 last:border-b-0 md:border-0"
+                  >
                     <HeaderLink {...linkProps} />
                   </li>
                 ))}
               </ul>
             </nav>
+            <div className="ml-2 md:ml-10 lg:ml-16 xl:ml-24">
+              <ThemeToggler />
+            </div>
           </div>
         </div>
       </Container>
@@ -86,7 +92,7 @@ interface HeaderClassName {
 }
 
 const headerLinkBaseClassName =
-  'block p-4 pl-6 font-semibold md:text-sm md:p-1 transition-colors uppercase';
+  'block p-4 font-semibold md:text-sm md:p-1 transition-colors uppercase';
 
 function createHeaderLinkClassName({ isActive }: HeaderClassName) {
   if (isActive) {

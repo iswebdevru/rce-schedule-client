@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { isBetaBannerHidden } from '../lib/config';
+import { isBetaBannerHiddenStorageKey } from '../lib/config';
 import { Modal } from './Modal';
 
 export function BetaBanner() {
   const [hidden, setHidden] = useState(
-    localStorage.getItem(isBetaBannerHidden) ? true : false
+    localStorage.getItem(isBetaBannerHiddenStorageKey) ? true : false
   );
 
   return (
@@ -25,7 +25,7 @@ export function BetaBanner() {
           className="px-4 block ml-auto rounded-md py-1 bg-yellow-500 text-white font-medium hover:bg-yellow-600 transition-colors"
           onClick={() => {
             setHidden(true);
-            localStorage.setItem(isBetaBannerHidden, 'true');
+            localStorage.setItem(isBetaBannerHiddenStorageKey, 'true');
           }}
         >
           Ок

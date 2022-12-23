@@ -137,7 +137,7 @@ function ScheduleCell(props: ComponentPropsWithoutRef<'td'>) {
   return (
     <td
       {...props}
-      className={`font-extralight border-slate-200 border-b border-r px-3 py-1 dark:border-neutral-800 last:border-r-0 group-last:border-b-0 ${props.className}`}
+      className={`border-slate-200 border-b border-r px-3 py-1 dark:border-neutral-800 last:border-r-0 group-last:border-b-0 ${props.className}`}
     />
   );
 }

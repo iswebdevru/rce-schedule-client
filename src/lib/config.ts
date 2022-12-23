@@ -1,5 +1,56 @@
-export const groupSearch = 'rce/group';
-export const isBetaBannerHidden = 'beta-banner';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faGear, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
+export const groupSearchStorageKey = 'rce/group';
+export const isBetaBannerHiddenStorageKey = 'beta-banner';
+export const themeStorageKey = 'theme';
+
+const second = 1000;
+const minute = second * 60;
+const hour = minute * 60;
+
+export const weekdays = [
+  'Понедельник',
+  'Вторник',
+  'Среда',
+  'Четверг',
+  'Пятница',
+  'Суббота',
+] as const;
+
+export const themeKeys = ['system', 'light', 'dark'] as const;
+
+export const bellsScheduleTypes = ['Обычный', 'Сокращенный'] as const;
+
+export type BellsScheduleTypes = typeof bellsScheduleTypes[number];
+
+export type ThemeKey = typeof themeKeys[number];
+
+export type Weekdays = typeof weekdays[number];
+
+export type TimePeriod = [number, number];
+
+export interface LessonWithBreak {
+  hasBreak: true;
+  firstHalf: TimePeriod;
+  lastHalf: TimePeriod;
+}
+
+export interface LessonWithoutBreak {
+  hasBreak: false;
+  period: TimePeriod;
+}
+
+export type LessonSchedule = LessonWithBreak | LessonWithoutBreak;
+
+export type BellsSchedule = Array<LessonSchedule | null>;
+
+export interface Theme {
+  name: string;
+  icon: IconDefinition;
+  activeClassName: string;
+  className: string;
+}
 
 export interface HeaderLinkProps {
   kind: 'internal' | 'external';
@@ -34,27 +85,6 @@ export const headerLinks: HeaderLinkProps[] = [
     text: 'GitHub',
   },
 ];
-
-type TimePeriod = [number, number];
-
-interface LessonWithBreak {
-  hasBreak: true;
-  firstHalf: TimePeriod;
-  lastHalf: TimePeriod;
-}
-
-interface LessonWithoutBreak {
-  hasBreak: false;
-  period: TimePeriod;
-}
-
-type LessonSchedule = LessonWithBreak | LessonWithoutBreak;
-
-type BellsSchedule = Array<LessonSchedule | null>;
-
-const second = 1000;
-const minute = second * 60;
-const hour = minute * 60;
 
 const commonWeekdayBellsSchedule: BellsSchedule = [
   {
@@ -166,21 +196,6 @@ const reducedSaturdayBellsSchedule: BellsSchedule = [
   },
 ];
 
-export const weekdays = [
-  'Понедельник',
-  'Вторник',
-  'Среда',
-  'Четверг',
-  'Пятница',
-  'Суббота',
-];
-
-export type Weekdays = typeof weekdays[number];
-
-export const bellsScheduleTypes = ['Обычный', 'Сокращенный'];
-
-export type BellsScheduleTypes = typeof bellsScheduleTypes[number];
-
 export const bellsScheduleMap: Record<
   typeof bellsScheduleTypes[number],
   Record<typeof weekdays[number], BellsSchedule>
@@ -200,5 +215,26 @@ export const bellsScheduleMap: Record<
     Четверг: reducedWeekdayBellsSchedule,
     Пятница: reducedWeekdayBellsSchedule,
     Суббота: reducedSaturdayBellsSchedule,
+  },
+};
+
+export const themes: Record<ThemeKey, Theme> = {
+  system: {
+    name: 'Системная',
+    icon: faGear,
+    className: 'hover:text-blue-500 dark:hover:text-blue-500',
+    activeClassName: 'text-blue-500',
+  },
+  light: {
+    name: 'Светлая',
+    icon: faSun,
+    className: 'hover:text-yellow-300 dark:hover:text-yellow-300',
+    activeClassName: 'text-yellow-300',
+  },
+  dark: {
+    name: 'Темная',
+    icon: faMoon,
+    className: 'hover:text-white dark:hover:text-white',
+    activeClassName: 'text-white',
   },
 };

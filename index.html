@@ -13,9 +13,19 @@
       content="Ежедневное расписание пар для Рязанского колледжа электроники (РКЭ)"
     />
     <title>Расписание РКЭ</title>
+    <script>
+      const theme = localStorage.getItem('theme');
+      if (
+        theme === 'dark' ||
+        (theme !== 'light' &&
+          window.matchMedia('(prefers-color-scheme: dark)').matches)
+      ) {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
   </head>
   <body class="bg-white dark:bg-neutral-900">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

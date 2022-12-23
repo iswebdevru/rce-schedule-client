@@ -1,17 +1,17 @@
 import { ChangeEventHandler, useState } from 'react';
 import { Schedule } from '../components/Schedule';
 import { Settings } from '../components/Settings';
-import { groupSearch } from '../lib/config';
+import { groupSearchStorageKey } from '../lib/config';
 
 export default function Index() {
   const [selectedDay, setSelectedDay] = useState(0);
   const [selectedGroup, setSelectedGroup] = useState(
-    localStorage.getItem(groupSearch) ?? ''
+    localStorage.getItem(groupSearchStorageKey) ?? ''
   );
 
   const onSelectedGroupChange: ChangeEventHandler<HTMLInputElement> = e => {
     setSelectedGroup(e.currentTarget.value);
-    localStorage.setItem(groupSearch, selectedGroup);
+    localStorage.setItem(groupSearchStorageKey, e.currentTarget.value);
   };
 
   const onSelectedDayChange: ChangeEventHandler<HTMLSelectElement> = e => {

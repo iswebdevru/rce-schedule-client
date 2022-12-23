@@ -11,7 +11,7 @@ import {
 import { getHoursAndMinutes } from '../lib/utils';
 
 const tdStyles =
-  'p-2 border-b border-r border-slate-200 last:border-r-0 group-last:border-b-0';
+  'p-2 border-b border-r border-slate-200 last:border-r-0 group-last:border-b-0 dark:border-neutral-800';
 
 export default function Bells() {
   const [selectedDay, setSelectedDay] = useState<Weekdays>(() => {
@@ -53,7 +53,7 @@ export default function Bells() {
           </Select>
         </div>
       </div>
-      <div className="border border-slate-200 rounded-md p-2">
+      <div className="border border-slate-200 rounded-md p-2 dark:border-neutral-800">
         <table className="w-full">
           <tbody>
             <tr className="group">
@@ -111,14 +111,21 @@ export default function Bells() {
 }
 
 function BellsTd({ className, ...props }: ComponentPropsWithoutRef<'td'>) {
-  return <td {...props} className={`${tdStyles} ${className ?? ''}`} />;
+  return (
+    <td
+      {...props}
+      className={`${tdStyles} dark:text-neutral-300 ${className ?? ''}`}
+    />
+  );
 }
 
 function BellsTh({ className, ...props }: ComponentPropsWithoutRef<'td'>) {
   return (
     <th
       {...props}
-      className={`${tdStyles} pt-0 text-left ${className ?? ''}`}
+      className={`${tdStyles} pt-0 text-left dark:text-neutral-200 ${
+        className ?? ''
+      }`}
     />
   );
 }
