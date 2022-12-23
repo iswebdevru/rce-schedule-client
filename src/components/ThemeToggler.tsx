@@ -53,7 +53,7 @@ export default function ThemeToggler() {
       </button>
       <ul
         className={classNames({
-          'absolute bottom-full left-0 mb-4 overflow-hidden bg-slate-900 flex flex-col rounded-md border border-slate-800 text-slate-400 md:bottom-auto md:left-auto md:top-full md:right-0 md:mb-0 md:mt-4 md:bg-slate-800 shadow-md dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-400':
+          'absolute z-50 bottom-full left-0 mb-4 overflow-hidden bg-slate-900 flex flex-col rounded-md border border-slate-800 text-slate-400 md:bottom-auto md:left-auto md:top-full md:right-0 md:mb-0 md:mt-4 md:bg-slate-800 shadow-md dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-400':
             true,
           hidden: !isOpened,
         })}
@@ -96,7 +96,7 @@ function ThemeOption({
     <button
       {...props}
       className={classNames({
-        'flex items-center gap-2 w-full font-semibold text-left px-3 py-2 text-sm hover:bg-slate-700 dark:hover:bg-neutral-800':
+        'flex items-center gap-2 w-full font-semibold text-left py-3 pl-4 pr-28 md:text-sm hover:bg-slate-700 dark:hover:bg-neutral-800 md:px-3 md:py-2':
           true,
         [activeClassName]: active,
         [className ?? '4242']: className,

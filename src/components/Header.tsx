@@ -40,7 +40,7 @@ export default function Header() {
             onClick={handleMenuState}
           ></div>
           <div
-            className={`flex flex-col justify-between bg-slate-900 dark:bg-neutral-900 px-4 py-12 md:bg-transparent fixed top-0 left-0 bottom-0 right-1/3 z-40 overflow-y-auto transition-transform md:static md:p-0 md:translate-x-0 md:flex-row md:items-center md:overflow-visible dark:md:bg-neutral-800 ${
+            className={`flex flex-col justify-between bg-slate-900 dark:bg-neutral-900 px-4 py-12 md:bg-transparent fixed top-0 left-0 bottom-0 right-1/3 z-40 transition-transform md:static md:p-0 md:translate-x-0 md:flex-row md:items-center dark:md:bg-neutral-800 ${
               isMenuOpened ? 'translate-x-0' : '-translate-x-full'
             }`}
           >
