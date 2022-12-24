@@ -1,5 +1,5 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faGear, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faDesktop, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 export const groupSearchStorageKey = 'rce/group';
 export const isBetaBannerHiddenStorageKey = 'beta-banner';
@@ -221,7 +221,7 @@ export const bellsScheduleMap: Record<
 export const themes: Record<ThemeKey, Theme> = {
   system: {
     name: 'Системная',
-    icon: faGear,
+    icon: faDesktop,
     className: 'hover:text-blue-500 dark:hover:text-blue-500',
     activeClassName: 'text-blue-500',
   },
