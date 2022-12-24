@@ -26,12 +26,12 @@ export default function Header() {
             />
           </a>
           <button
-            className="w-9 h-6 flex flex-col justify-between md:hidden"
+            className="w-9 h-7 flex flex-col justify-between md:hidden"
             onClick={handleMenuState}
           >
-            <span className="block w-full h-[3px] bg-slate-300"></span>
-            <span className="block w-full h-[3px] bg-slate-300"></span>
-            <span className="block w-full h-[3px] bg-slate-300"></span>
+            <span className="rounded-sm block w-full h-1 bg-slate-300 dark:bg-neutral-200"></span>
+            <span className="rounded-sm block w-full h-1 bg-slate-300 dark:bg-neutral-200"></span>
+            <span className="rounded-sm block w-full h-1 bg-slate-300 dark:bg-neutral-200"></span>
           </button>
           <div
             className={`bg-[#0007] transition-opacity fixed inset-0 z-30 md:hidden ${

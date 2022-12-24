@@ -69,7 +69,7 @@ export default function ThemeToggler() {
               activeClassName={theme.activeClassName}
               onClick={changeThemeFactory(key as ThemeKey)}
             >
-              <div className="w-6">
+              <div className="w-6 grid place-items-center">
                 <FontAwesomeIcon icon={theme.icon} className="text-lg" />
               </div>
               {theme.name}
@@ -96,7 +96,7 @@ function ThemeOption({
     <button
       {...props}
       className={classNames({
-        'flex items-center gap-2 w-full font-semibold text-left py-3 pl-4 pr-28 md:text-sm hover:bg-slate-700 dark:hover:bg-neutral-800 md:px-3 md:py-2':
+        'flex items-center gap-3 w-full font-semibold text-left py-3 pl-4 pr-28 md:text-sm hover:bg-slate-700 dark:hover:bg-neutral-800 md:px-3 md:py-2':
           true,
         [activeClassName]: active,
         [className ?? '4242']: className,
