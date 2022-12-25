@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ThemeKey, themeStorageKey, themeKeys } from './config';
 
+function getSystemColorMode() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
+}
+
 function getUserTheme(): ThemeKey {
   const storedTheme = localStorage.getItem(themeStorageKey);
   if (storedTheme && themeKeys.includes(storedTheme as ThemeKey)) {
@@ -13,10 +19,7 @@ function setUserTheme(theme: ThemeKey): void {
   localStorage.setItem(themeStorageKey, theme);
   switch (theme) {
     case 'system':
-      const preferDark = window.matchMedia(
-        '(prefers-color-scheme: dark)'
-      ).matches;
-      if (preferDark) {
+      if (getSystemColorMode() === 'dark') {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
@@ -31,10 +34,31 @@ function setUserTheme(theme: ThemeKey): void {
   }
 }
 
-export function useColorSchemeChangeEffect() {
+interface ThemeMeta {
+  key: ThemeKey;
+  actual: 'light' | 'dark';
+}
+
+export function useTheme() {
+  const [themeState, setThemeState] = useState<ThemeMeta>(() => {
+    const themeKey = getUserTheme();
+    return {
+      key: themeKey,
+      actual: themeKey === 'system' ? getSystemColorMode() : themeKey,
+    };
+  });
+
+  const setTheme = useCallback((theme: ThemeKey) => {
+    setUserTheme(theme);
+    setThemeState({
+      key: theme,
+      actual: theme === 'system' ? getSystemColorMode() : theme,
+    });
+  }, []);
+
   useEffect(() => {
     const themeListener = () => {
-      setUserTheme('system');
+      setTheme('system');
     };
     const themeMediaQueryList = window.matchMedia(
       '(prefers-color-scheme: dark)'
@@ -43,15 +67,6 @@ export function useColorSchemeChangeEffect() {
     return () => {
       themeMediaQueryList.removeEventListener('change', themeListener);
     };
-  }, []);
-}
-
-export function useTheme() {
-  const [themeState, setThemeState] = useState(getUserTheme);
-
-  const setTheme = useCallback((theme: ThemeKey) => {
-    setUserTheme(theme);
-    setThemeState(theme);
   }, []);
 
   return [themeState, setTheme] as const;

@@ -2,19 +2,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { ComponentPropsWithoutRef, useEffect, useRef, useState } from 'react';
 import { ThemeKey, themes } from '../lib/config';
-import { useColorSchemeChangeEffect, useTheme } from '../lib/theme';
+import { useTheme } from '../lib/theme';
 
 export default function ThemeToggler() {
   const [isOpened, setIsOpened] = useState(false);
-  const [selectedTheme, setSelectedTheme] = useTheme();
+  const [{ key: themeKey, actual: actualTheme }, setSelectedTheme] = useTheme();
   const menuRef = useRef<HTMLDivElement>(null);
 
   const changeThemeFactory = (theme: ThemeKey) => () => {
     setSelectedTheme(theme);
     setIsOpened(false);
   };
-
-  useColorSchemeChangeEffect();
 
   useEffect(() => {
     const handleClose = (e: MouseEvent) => {
@@ -33,23 +31,20 @@ export default function ThemeToggler() {
     };
   }, []);
 
-  const themeMeta = themes[selectedTheme];
+  const themeBtn = themes[actualTheme];
 
   return (
     <div className="relative inline-block" ref={menuRef}>
       <button
         className={classNames({
           'w-10 h-10 grid place-items-center md:w-7 md:h-7': true,
-          [themeMeta.className]: true,
-          [themeMeta.activeClassName]: isOpened,
+          [themeBtn.className]: true,
+          [themeBtn.activeClassName]: isOpened,
           'text-slate-400 dark:text-neutral-400': !isOpened,
         })}
         onClick={() => setIsOpened(p => !p)}
       >
-        <FontAwesomeIcon
-          icon={themeMeta.icon}
-          className="text-2xl md:text-lg"
-        />
+        <FontAwesomeIcon icon={themeBtn.icon} className="text-2xl md:text-lg" />
       </button>
       <ul
         className={classNames({
@@ -64,7 +59,7 @@ export default function ThemeToggler() {
             className="border-b border-slate-800 last:border-b-0 dark:border-neutral-800"
           >
             <ThemeOption
-              active={key === selectedTheme}
+              active={key === themeKey}
               className={theme.className}
               activeClassName={theme.activeClassName}
               onClick={changeThemeFactory(key as ThemeKey)}
