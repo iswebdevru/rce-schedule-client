@@ -70,11 +70,6 @@ export const headerLinks: HeaderLinkProps[] = [
     text: 'звонки',
   },
   {
-    kind: 'internal',
-    href: '/iswebdev',
-    text: 'news',
-  },
-  {
     kind: 'external',
     href: 'https://xn--j1al4b.xn--p1ai/',
     text: 'колледж',
@@ -88,6 +83,11 @@ export const headerLinks: HeaderLinkProps[] = [
     kind: 'external',
     href: 'https://github.com/iswebdevru/rce-schedule-client',
     text: 'GitHub',
+  },
+  {
+    kind: 'internal',
+    href: '/iswebdev',
+    text: 'о нас',
   },
 ];
 
