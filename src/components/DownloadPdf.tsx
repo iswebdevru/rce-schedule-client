@@ -43,7 +43,7 @@ export function DownloadPdf() {
 }
 
 function getDownloadLink(day: DayWithChanges): string {
-  return `https://xn--j1al4b.xn--p1ai/assets/rasp/${
+  return `https://docs.google.com/gview?embedded=true&url=https://xn--j1al4b.xn--p1ai/assets/rasp/${
     day.day < 10 ? `0${day.day}` : day.day
   }${day.month < 10 ? `0${day.month}` : day.month}${day.year}${
     day.version > 0 ? day.version : ''
