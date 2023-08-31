@@ -4,7 +4,7 @@ import { createDateId, toHumanReadableDate } from '../lib/utils';
 import Label from './Label';
 import Select, { Option } from './Select';
 import { useScheduleStore } from '../lib/store';
-import { DownloadPdf } from './DownloadPdf';
+import { LinkToPdfView } from './LinkToPdfView';
 
 export function Settings() {
   const inputGroupId = useId();
@@ -32,9 +32,9 @@ export function Settings() {
         </div>
         <div className="flex flex-col">
           <div className="mb-2 font-semibold dark:text-neutral-400">
-            Источник
+            Источник:
           </div>
-          <DownloadPdf />
+          <LinkToPdfView />
         </div>
       </div>
     </div>

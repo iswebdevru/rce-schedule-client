@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { BetaBanner } from './components/BetaBanner';
 import Container from './components/Container';
 import Header from './components/Header';
 import FourOFour from './pages/404';
@@ -18,7 +17,6 @@ export function App() {
             <Route path="*" element={<FourOFour />} />
           </Routes>
         </Container>
-        <BetaBanner />
       </div>
     </BrowserRouter>
   );
