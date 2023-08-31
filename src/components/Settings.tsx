@@ -32,7 +32,7 @@ export function Settings() {
         </div>
         <div className="flex flex-col">
           <div className="mb-2 font-semibold dark:text-neutral-400">
-            Скачать
+            Источник
           </div>
           <DownloadPdf />
         </div>
