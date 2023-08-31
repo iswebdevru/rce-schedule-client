@@ -60,3 +60,5 @@ export function getHoursAndMinutes(ms: number) {
 
 export const fetcher = async (url: string) =>
   fetch(url).then(data => data.json());
+
+export const noop = () => {};

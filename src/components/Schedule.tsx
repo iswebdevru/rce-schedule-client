@@ -1,21 +1,16 @@
 import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import { useDaysWithChanges, useSchedule } from '../lib/api';
 import { groupFilter, repeat } from '../lib/utils';
+import { useScheduleStore } from '../lib/store';
 
-export interface ScheduleProps {
-  filters: {
-    group: string;
-    dayId: number;
-  };
-}
-
-export function Schedule({ filters }: ScheduleProps) {
+export function Schedule() {
   const { data: days } = useDaysWithChanges();
+  const { day, group: groupStr } = useScheduleStore();
   const {
     data: schedule,
     error,
     isLoading,
-  } = useSchedule(days ? days[filters.dayId] : undefined);
+  } = useSchedule(days && days.length ? days[day] : undefined);
   if (isLoading || !schedule) {
     return (
       <ScheduleContainer>
@@ -29,7 +24,7 @@ export function Schedule({ filters }: ScheduleProps) {
   return (
     <ScheduleContainer>
       {schedule.data
-        .filter(({ group }) => groupFilter(group, filters.group))
+        .filter(({ group }) => groupFilter(group, groupStr))
         .map(groupSchedule => {
           return (
             <ScheduleWrapper key={groupSchedule.group}>

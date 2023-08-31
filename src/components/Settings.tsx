@@ -1,23 +1,15 @@
-import { ChangeEventHandler, useId } from 'react';
+import { useId } from 'react';
 import { useDaysWithChanges } from '../lib/api';
 import { createDateId, toHumanReadableDate } from '../lib/utils';
 import Label from './Label';
 import Select, { Option } from './Select';
+import { useScheduleStore } from '../lib/store';
+import { DownloadPdf } from './DownloadPdf';
 
-export interface SettingsProps {
-  selectedGroup: string;
-  onSelectedGroupChange: ChangeEventHandler<HTMLInputElement>;
-  selectedDay: number;
-  onSelectedDayChange: ChangeEventHandler<HTMLSelectElement>;
-}
-
-export function Settings({
-  selectedGroup,
-  onSelectedGroupChange,
-  selectedDay,
-  onSelectedDayChange,
-}: SettingsProps) {
+export function Settings() {
   const inputGroupId = useId();
+  const { group, setGroup, day, setDay } = useScheduleStore();
+
   return (
     <div className="mb-6">
       <div className="flex flex-col md:flex-row gap-2 sm:gap-4">
@@ -28,16 +20,21 @@ export function Settings({
           <input
             id={inputGroupId}
             type="text"
+            autoComplete="off"
+            name="group"
             className="px-4 py-2 text-sm rounded-md transition-[outline] outline outline-1 outline-slate-400 focus:outline-slate-900 dark:bg-neutral-900 dark:outline-neutral-800 dark:focus:outline-neutral-700 dark:text-neutral-300"
-            value={selectedGroup}
-            onChange={onSelectedGroupChange}
+            value={group}
+            onChange={e => setGroup(e.currentTarget.value)}
           />
         </div>
         <div className="flex flex-col">
-          <SelectDay
-            selectedDay={selectedDay}
-            onSelectedDayChange={onSelectedDayChange}
-          />
+          <SelectDay selectedDay={day} onSelectedDayChange={setDay} />
+        </div>
+        <div className="flex flex-col">
+          <div className="mb-2 font-semibold dark:text-neutral-400">
+            Скачать
+          </div>
+          <DownloadPdf />
         </div>
       </div>
     </div>
@@ -46,7 +43,7 @@ export function Settings({
 
 interface SelectDayProps {
   selectedDay: number;
-  onSelectedDayChange: ChangeEventHandler<HTMLSelectElement>;
+  onSelectedDayChange: (day: number) => void;
 }
 
 function SelectDay({ selectedDay, onSelectedDayChange }: SelectDayProps) {
@@ -68,7 +65,7 @@ function SelectDay({ selectedDay, onSelectedDayChange }: SelectDayProps) {
       <Select
         id={selectDayId}
         value={selectedDay}
-        onChange={onSelectedDayChange}
+        onChange={e => onSelectedDayChange(+e.currentTarget.value)}
       >
         {days.map((day, i) => {
           return (
