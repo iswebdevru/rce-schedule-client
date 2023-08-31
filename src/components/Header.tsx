@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HeaderLinkProps, headerLinks } from '../lib/config';
 import { NavLink, useLocation } from 'react-router-dom';
-import logo from '../img/logo.svg';
 import Container from './Container';
 import ThemeToggler from './ThemeToggler';
 
@@ -15,23 +14,22 @@ export default function Header() {
   }, [location]);
 
   return (
-    <header className="bg-slate-900 text-white mb-4 dark:bg-neutral-800">
+    <header className="dark:bg-neutral-800 mb-4">
       <Container>
         <div className="flex justify-between items-center h-14">
-          <a href="/" className="flex flex-col items-center">
-            <img
-              src={logo}
-              alt="РЯЗАНСКИЙ КОЛЛЕДЖ ЭЛЕКТРОНИКИ"
-              className="h-6"
-            />
+          <a
+            href="/"
+            className="flex flex-col items-center text-blue-600 font-bold dark:text-neutral-100"
+          >
+            РКЭ Next
           </a>
           <button
-            className="w-9 h-7 flex flex-col justify-between md:hidden"
+            className="w-9 h-6 flex flex-col justify-between md:hidden"
             onClick={handleMenuState}
           >
-            <span className="rounded-sm block w-full h-1 bg-slate-300 dark:bg-neutral-200"></span>
-            <span className="rounded-sm block w-full h-1 bg-slate-300 dark:bg-neutral-200"></span>
-            <span className="rounded-sm block w-full h-1 bg-slate-300 dark:bg-neutral-200"></span>
+            <span className="rounded-sm block w-full h-1 bg-blue-600 dark:bg-neutral-200"></span>
+            <span className="rounded-sm block w-full h-1 bg-blue-600 dark:bg-neutral-200"></span>
+            <span className="rounded-sm block w-full h-1 bg-blue-600 dark:bg-neutral-200"></span>
           </button>
           <div
             className={`bg-[#0007] transition-opacity fixed inset-0 z-30 md:hidden ${
@@ -40,7 +38,7 @@ export default function Header() {
             onClick={handleMenuState}
           ></div>
           <div
-            className={`flex flex-col justify-between bg-slate-900 dark:bg-neutral-900 px-4 py-12 md:bg-transparent fixed top-0 left-0 bottom-0 right-1/3 z-40 transition-transform md:static md:p-0 md:translate-x-0 md:flex-row md:items-center dark:md:bg-neutral-800 ${
+            className={`flex flex-col justify-between bg-neutral-900 dark:bg-neutral-900 px-4 py-12 md:bg-transparent fixed top-0 left-0 bottom-0 right-1/3 z-40 transition-transform md:static md:p-0 md:translate-x-0 md:flex-row md:items-center dark:md:bg-neutral-800 ${
               isMenuOpened ? 'translate-x-0' : '-translate-x-full'
             }`}
           >
@@ -49,7 +47,7 @@ export default function Header() {
                 {headerLinks.map(linkProps => (
                   <li
                     key={linkProps.href}
-                    className="border-b border-slate-800 dark:border-neutral-800 last:border-b-0 md:border-0"
+                    className="border-b border-neutral-800 dark:border-neutral-800 last:border-b-0 md:border-0"
                   >
                     <HeaderLink {...linkProps} />
                   </li>
@@ -96,7 +94,7 @@ const headerLinkBaseClassName =
 
 function createHeaderLinkClassName({ isActive }: HeaderClassName) {
   if (isActive) {
-    return `${headerLinkBaseClassName} text-slate-50 dark:text-neutral-50`;
+    return `${headerLinkBaseClassName} text-blue-600 dark:text-neutral-50`;
   }
-  return `${headerLinkBaseClassName} text-slate-400 hover:text-slate-50 dark:text-neutral-400 dark:hover:text-neutral-50`;
+  return `${headerLinkBaseClassName} text-neutral-300 md:text-neutral-900 hover:text-blue-600 dark:text-neutral-400 dark:hover:text-neutral-50`;
 }

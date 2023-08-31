@@ -36,19 +36,18 @@ export default function ThemeToggler() {
   return (
     <div className="relative inline-block" ref={menuRef}>
       <button
-        className={classNames({
-          'w-10 h-10 grid place-items-center md:w-7 md:h-7': true,
-          [themeBtn.className]: true,
-          [themeBtn.activeClassName]: isOpened,
-          'text-slate-400 dark:text-neutral-400': !isOpened,
-        })}
+        className={classNames(
+          themeBtn.activeClassName,
+          themeBtn.className,
+          'w-10 h-10 grid place-items-center md:w-7 md:h-7'
+        )}
         onClick={() => setIsOpened(p => !p)}
       >
         <FontAwesomeIcon icon={themeBtn.icon} className="text-2xl md:text-lg" />
       </button>
       <ul
         className={classNames({
-          'absolute z-50 bottom-full left-0 mb-4 overflow-hidden bg-slate-900 flex flex-col rounded-md border border-slate-800 text-slate-400 md:bottom-auto md:left-auto md:top-full md:right-0 md:mb-0 md:mt-4 md:bg-slate-800 shadow-md dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-400':
+          'absolute z-50 bottom-full left-0 mb-4 overflow-hidden flex flex-col rounded-md border border-neutral-700 md:border-neutral-200 text-neutral-500 md:text-neutral-700 md:bottom-auto md:left-auto md:top-full md:right-0 md:mb-0 md:mt-4 md:bg-white shadow-md dark:bg-neutral-900 dark:border-neutral-800 dark:text-neutral-400':
             true,
           hidden: !isOpened,
         })}
@@ -56,7 +55,7 @@ export default function ThemeToggler() {
         {Object.entries(themes).map(([key, theme]) => (
           <li
             key={key}
-            className="border-b border-slate-800 last:border-b-0 dark:border-neutral-800"
+            className="border-b border-neutral-700 md:border-neutral-200 last:border-b-0 dark:border-neutral-800"
           >
             <ThemeOption
               active={key === themeKey}
@@ -90,11 +89,10 @@ function ThemeOption({
   return (
     <button
       {...props}
-      className={classNames({
-        'flex items-center gap-3 w-full font-semibold text-left py-3 pl-4 pr-28 md:text-sm hover:bg-slate-700 dark:hover:bg-neutral-800 md:px-3 md:py-2':
+      className={classNames(className, {
+        'flex items-center gap-3 w-full font-semibold text-left py-3 pl-4 pr-28 md:text-sm hover:bg-neutral-800 md:hover:bg-neutral-100 dark:hover:bg-neutral-800 md:px-3 md:py-2':
           true,
         [activeClassName]: active,
-        [className ?? '4242']: className,
       })}
     />
   );

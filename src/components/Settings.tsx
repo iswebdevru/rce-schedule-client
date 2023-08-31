@@ -22,7 +22,7 @@ export function Settings() {
             type="text"
             autoComplete="off"
             name="group"
-            className="px-4 py-2 text-sm rounded-md transition-[outline] outline outline-1 outline-slate-400 focus:outline-slate-900 dark:bg-neutral-900 dark:outline-neutral-800 dark:focus:outline-neutral-700 dark:text-neutral-300"
+            className="px-4 py-2 focus:ring-4 ring-blue-300 dark:ring-blue-800 text-sm rounded-md transition-[outline] outline outline-1 outline-slate-300 focus:outline-blue-500 dark:bg-neutral-900 dark:outline-neutral-800 dark:focus:outline-neutral-700 dark:text-neutral-300"
             value={group}
             onChange={e => setGroup(e.currentTarget.value)}
           />
@@ -54,7 +54,7 @@ function SelectDay({ selectedDay, onSelectedDayChange }: SelectDayProps) {
 
   if (isLoading) {
     piece = (
-      <div className="flex min-w-[180px] h-[36px] items-center px-2 border rounded-md border-gray-700 dark:border-neutral-800">
+      <div className="flex min-w-[130px] h-[36px] items-center px-2 py-1.5 border rounded-md border-outline-300 dark:border-neutral-800">
         <div className="h-5 w-full animate-pulse bg-gray-300 rounded-md dark:bg-neutral-800"></div>
       </div>
     );

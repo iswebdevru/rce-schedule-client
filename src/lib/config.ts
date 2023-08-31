@@ -22,11 +22,11 @@ export const themeKeys = ['system', 'light', 'dark'] as const;
 
 export const bellsScheduleTypes = ['Обычный', 'Сокращенный'] as const;
 
-export type BellsScheduleTypes = typeof bellsScheduleTypes[number];
+export type BellsScheduleTypes = (typeof bellsScheduleTypes)[number];
 
-export type ThemeKey = typeof themeKeys[number];
+export type ThemeKey = (typeof themeKeys)[number];
 
-export type Weekdays = typeof weekdays[number];
+export type Weekdays = (typeof weekdays)[number];
 
 export type TimePeriod = [number, number];
 
@@ -68,6 +68,11 @@ export const headerLinks: HeaderLinkProps[] = [
     kind: 'internal',
     href: '/bells',
     text: 'звонки',
+  },
+  {
+    kind: 'internal',
+    href: '/iswebdev',
+    text: 'news',
   },
   {
     kind: 'external',
@@ -197,8 +202,8 @@ const reducedSaturdayBellsSchedule: BellsSchedule = [
 ];
 
 export const bellsScheduleMap: Record<
-  typeof bellsScheduleTypes[number],
-  Record<typeof weekdays[number], BellsSchedule>
+  (typeof bellsScheduleTypes)[number],
+  Record<(typeof weekdays)[number], BellsSchedule>
 > = {
   Обычный: {
     Понедельник: commonWeekdayBellsSchedule,
@@ -228,13 +233,14 @@ export const themes: Record<ThemeKey, Theme> = {
   light: {
     name: 'Светлая',
     icon: faSun,
-    className: 'hover:text-yellow-300 dark:hover:text-yellow-300',
-    activeClassName: 'text-yellow-300',
+    className: 'hover:text-yellow-600 dark:hover:text-yellow-300',
+    activeClassName: 'text-yellow-500',
   },
   dark: {
     name: 'Темная',
     icon: faMoon,
-    className: 'hover:text-white dark:hover:text-white',
+    className:
+      'hover:text-neutral-200 md:hover:text-neutral-900 dark:hover:text-white',
     activeClassName: 'text-white',
   },
 };

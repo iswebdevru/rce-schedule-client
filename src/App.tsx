@@ -4,6 +4,7 @@ import Header from './components/Header';
 import FourOFour from './pages/404';
 import Bells from './pages/Bells';
 import Index from './pages/Index';
+import Iswebdev from './pages/Iswebdev';
 
 export function App() {
   return (
@@ -14,6 +15,7 @@ export function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/bells" element={<Bells />} />
+            <Route path="/iswebdev" element={<Iswebdev />} />
             <Route path="*" element={<FourOFour />} />
           </Routes>
         </Container>
