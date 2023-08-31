@@ -85,11 +85,13 @@ export const headerLinks: HeaderLinkProps[] = [
     text: 'GitHub',
   },
   {
-    kind: 'internal',
-    href: '/iswebdev',
+    kind: 'external',
+    href: 'https://iswebdev.ru',
     text: 'о нас',
   },
 ];
+
+export const tgChannel = 'https://t.me/iswebdev';
 
 const commonWeekdayBellsSchedule: BellsSchedule = [
   {

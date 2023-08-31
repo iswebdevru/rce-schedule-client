@@ -2,6 +2,8 @@ import { ComponentPropsWithoutRef, PropsWithChildren } from 'react';
 import { useDaysWithChanges, useSchedule } from '../lib/api';
 import { groupFilter, repeat } from '../lib/utils';
 import { useScheduleStore } from '../lib/store';
+import classNames from 'classnames';
+import { tgChannel } from '../lib/config';
 
 export function Schedule() {
   const { data: days } = useDaysWithChanges();
@@ -21,16 +23,36 @@ export function Schedule() {
   if (error || schedule.error) {
     return <>Ошибка: не удалось получить данные с сервера</>;
   }
+
   return (
     <ScheduleContainer>
       {schedule.data
         .filter(({ group }) => groupFilter(group, groupStr))
         .map(groupSchedule => {
+          const isIS = /^иск?-/i.test(groupSchedule.group);
           return (
             <ScheduleWrapper key={groupSchedule.group}>
-              <h2 className="text-xl font-medium mx-4 mt-3 dark:text-neutral-200">
-                {groupSchedule.group}
-              </h2>
+              {isIS ? (
+                <h2 className="text-xl font-bold mx-4 mt-3">
+                  <a
+                    href={tgChannel}
+                    title="Вступай в наше сообщество :)"
+                    target="_blank"
+                    className={classNames({
+                      'bg-gradient-to-br from-purple-600 to-blue-500 bg-clip-text text-transparent hover:bg-gradient-to-tl dark:from-purple-500 dark:to-blue-400':
+                        isIS,
+                      '': !isIS,
+                    })}
+                  >
+                    {groupSchedule.group}
+                  </a>
+                </h2>
+              ) : (
+                <h2 className="text-xl font-bold mx-4 mt-3 text-slate-900 dark:text-neutral-200">
+                  {groupSchedule.group}
+                </h2>
+              )}
+
               <div className="p-2">
                 <table className="border-none w-full">
                   <tbody className="dark:text-neutral-300">
